@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  viewbot:
+    build: .
+    container_name: poophd_viewbot
+    restart: always
+    volumes:
+      - ./view_log.txt:/app/view_log.txt
+      - ./proxy_list.txt:/app/proxy_list.txt
+      - ./video_list.txt:/app/video_list.txt
+
+  proxy_fetcher:
+    build: .
+    container_name: proxy_fetcher
+    command: python3 proxy_fetcher.py
+    restart: unless-stopped
+    volumes:
+      - ./proxy_list.txt:/app/proxy_list.txt
